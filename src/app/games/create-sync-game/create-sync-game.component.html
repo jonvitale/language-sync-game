@@ -1,0 +1,8 @@
+<div #game (keydown)="onKeyPress($event)">
+	<app-create-sync-game-display [transcript]="currentTranscript" ></app-create-sync-game-display>
+	<div>
+		<button (click)="onPlay($event);">Create Timing</button>
+		<button #stopButton (click)="onStop($event);">Stop</button>
+		<button #stopButton (click)="onPlayTiming($event);">Playback Timing</button>
+	</div>
+</div>
