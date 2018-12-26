@@ -23,29 +23,25 @@ export class CreateSyncGameComponent implements OnInit {
   	this.transcriptService.getTranscript(filename + '.txt')
   	.then((transcript: Transcript) => {
   		this.currentTranscript = transcript;
-  		this.audioService.loadAudio(filename + '.mp3');
+  		this.audioService.loadAudio(filename + '.mp3', this.onStop.bind(this));
   	});
   }
 
-  onPlay(event: Event) {
+  onPlay(event?: Event) {
   	console.log("play event", event);
-  	// take off focus on this element because it will capture keyboard presses
-  	//event.srcElement.blur();
-  	if (event instanceof MouseEvent) {
-	  	let filename = this.currentSyncFilename;
-	  	this.audioService.playAudio(filename + '.mp3');
-	  	this.displayComponent.onPressedPlay(true);
-	  }
+  	let filename = this.currentSyncFilename;
+	  this.audioService.playAudio(filename + '.mp3');
+	  this.displayComponent.onPlay(true);
   }
 
-  onStop() {
-
+  onStop(event?: Event) {
+  	this.displayComponent.onStop();
   }
 
   onPlayTiming() {
   	let filename = this.currentSyncFilename;
 	  this.audioService.playAudio(filename + '.mp3');
-	  this.displayComponent.onPressedPlay(false);
+	  this.displayComponent.onPlay(false);
   }
 
   onKeyPress(event: KeyboardEvent) {

@@ -19,12 +19,16 @@ export class Transcript {
 	getWordAt(index: number): string {
 		if (index < this.transcript.length) {
 			return this.transcript[index].word;
+		} else {
+			return '';
 		}
 	}
 
 	getTimeAt(index: number): number {
 		if (index < this.transcript.length) {
 			return this.transcript[index].time;
+		} else {
+			return null;
 		}
 	}
 
