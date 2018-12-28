@@ -31,7 +31,7 @@ export class CreateSyncGameComponent implements OnInit {
   	console.log("play event", event);
   	let filename = this.currentSyncFilename;
 	  this.audioService.playAudio(filename + '.mp3');
-	  this.displayComponent.onPlay(true);
+	  this.displayComponent.createNewSync();
   }
 
   onStop(event?: Event) {
@@ -41,14 +41,13 @@ export class CreateSyncGameComponent implements OnInit {
   onPlayTiming() {
   	let filename = this.currentSyncFilename;
 	  this.audioService.playAudio(filename + '.mp3');
-	  this.displayComponent.onPlay(false);
+	  this.displayComponent.playCurrentSync();
   }
 
   onKeyPress(event: KeyboardEvent) {
   	if (event.key == 'ArrowRight'){
-  		this.displayComponent.onSyncAction();
-  	}
-  	
+  		this.displayComponent.advanceSync();
+  	}  	
   }
 
 }
