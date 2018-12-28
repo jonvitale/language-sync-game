@@ -17,7 +17,7 @@ export class Transcript {
 	}
 
 	getWordAt(index: number): string {
-		if (index < this.transcript.length) {
+		if (index >= 0 && index < this.transcript.length) {
 			return this.transcript[index].word;
 		} else {
 			return '';
@@ -25,7 +25,7 @@ export class Transcript {
 	}
 
 	getTimeAt(index: number): number {
-		if (index < this.transcript.length) {
+		if (index >= 0 && index < this.transcript.length) {
 			return this.transcript[index].time;
 		} else {
 			return null;
@@ -33,7 +33,7 @@ export class Transcript {
 	}
 
 	setTimeAt(index: number, time: number): void {
-		if (index < this.transcript.length) {
+		if (index >= 0 && index < this.transcript.length) {
 			this.transcript[index].time = time;
 		}
 	}

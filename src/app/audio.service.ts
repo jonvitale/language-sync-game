@@ -12,9 +12,9 @@ export class AudioService {
 	private http: HttpClient;
 	private sound: Howl;
 	private isPlaying: boolean = false;
-	private endCallback: any;
+	private endCallback: (...args: any[]) => void;
 
-  loadAudio(filename: string, endCallback: any): Promise<boolean> {
+  loadAudio(filename: string, endCallback: (...args: any[]) => void): Promise<boolean> {
   	return new Promise((resolve, reject) => {
   		if (filename !== this.filename){  		
   			try {
@@ -39,7 +39,7 @@ export class AudioService {
 		});
   }
 
-	playAudio(filename: string, endCallback?: any): void {
+	playAudio(filename: string, endCallback?: (...args: any[]) => void): void {
 		if (filename !== this.filename){
 			try {
 				this.loadAudio(filename, endCallback).then((sound: Howl) => {
