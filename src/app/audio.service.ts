@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { AngularFireStorage } from '@angular/fire/storage';
+
 import {Howl, Howler} from 'howler';
 
 @Injectable({
@@ -20,8 +20,6 @@ export class AudioService {
 	constructor (private http: HttpClient, private storage: AngularFireStorage) { }
 
   loadAudio(filename: string, endCallback: (...args: any[]) => void): Promise<boolean> {
-  	
-  	
   	return new Promise((resolve, reject) => {
   		if (filename !== this.filename){  		
   			try {
