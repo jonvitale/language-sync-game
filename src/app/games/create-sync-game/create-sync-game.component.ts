@@ -13,9 +13,11 @@ import { Transcript } from '../../shared/Transcript';
 export class CreateSyncGameComponent implements OnInit {
 
 	@ViewChild(CreateSyncGameDisplayComponent) private displayComponent: CreateSyncGameDisplayComponent;
-	private currentSyncFilename: string = 'pronunciation_mese_d_affitto';
+	private currentSyncFilename: string = 'inspiegato';
 	private currentTranscript: Transcript;
-
+  private isPlaying: boolean = false;
+  private isPaused: boolean = false;
+  
   constructor(private transcriptService: TranscriptService, private audioService: AudioService) { }
 
   ngOnInit() {
@@ -30,11 +32,25 @@ export class CreateSyncGameComponent implements OnInit {
   onPlay(event?: Event) {
   	console.log("play event", event);
   	let filename = this.currentSyncFilename;
-	  this.audioService.playAudio(filename + '.mp3');
-	  this.displayComponent.createNewSync();
+    if (this.isPlaying) {
+      if (this.isPaused){
+        this.audioService.unpauseAudio();
+      } else {
+        this.audioService.pauseAudio();
+      }
+      this.isPaused = !this.isPaused; 
+    } else {
+      this.isPlaying = true;
+      this.audioService.playAudio(filename + '.mp3');
+      this.displayComponent.createNewSync();  
+    }
+	  
   }
 
   onStop(event?: Event) {
+    this.isPaused = false;
+    this.isPlaying = false;
+    this.audioService.stopAudio();
   	this.displayComponent.onStop();
   }
 

@@ -152,7 +152,12 @@ export class CreateSyncGameDisplayComponent implements OnInit {
 			for (let i = this.pTexts.length / 2; i < this.pTexts.length; i++){
   			this.pTexts[i].x = curX; 
   			curX += this.pTexts[i].width + 2;
-  			this.pTexts[i].style.fill = 0xffffff;
+        if (i == this.pTexts.length / 2){
+          this.pTexts[i].style.fill = 0xffffff;  
+        } else {
+          this.pTexts[i].style.fill = 0xaaaaaa;
+        }
+  			
 			}
   	}
   }
@@ -182,7 +187,11 @@ export class CreateSyncGameDisplayComponent implements OnInit {
 	  			this.pTexts[i].text = word;
 	  			this.pTexts[i].x = curX; 
 	  			curX += this.pTexts[i].width + 2;
-	  			this.pTexts[i].style.fill = 0xffffff;
+	  			if (i == this.pTexts.length / 2){
+            this.pTexts[i].style.fill = 0xffffff;  
+          } else {
+            this.pTexts[i].style.fill = 0xaaaaaa;
+          }
   			}
   		}
   	}
