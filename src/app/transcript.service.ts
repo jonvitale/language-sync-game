@@ -11,25 +11,19 @@ export class TranscriptService {
 
   constructor(private http: HttpClient, private storage: AngularFireStorage) { }
 
-  getTranscriptText(filename): Promise<any> {
+  getTranscriptText(filename): Promise<string> {
   	return new Promise((resolve, reject) => {
-  		try {
-				let storageRef = this.storage.ref('transcripts/'+filename);
-		  	storageRef.getDownloadURL().subscribe(
-		  		(url: string) => {
-			  		console.log(url);
-			  		this.http.get(url, {responseType: 'text'}).subscribe(
-			  			(txt) => {
-			  			console.log(txt);
-			  			resolve(txt);
-			  			}, error => console.log(error)
-			  		);
-					}, error => console.log(error)
-				);
-				
-			} catch (e) {
-				reject(e)
-			}			  		
+  		let storageRef = this.storage.ref('transcripts/'+filename);
+	  	storageRef.getDownloadURL().subscribe(
+	  		(url: string) => {
+		  		this.http.get(url, {responseType: 'text'}).subscribe(
+		  			(txt: string) => {
+              txt = txt.replace(/\s+/g, ' ');
+              resolve(txt);
+		  			}, error => reject(error)
+		  		);
+				}, error => reject(error)
+			);	  		
   	});
   }
 

@@ -21,6 +21,7 @@ export class CreateSyncGameDisplayComponent implements OnInit {
 	private pTexts: PIXI.Text[] = [];
 	private width: number = 500;
 	private height: number = 100;
+  private wordSpacing: number = 5;
 	private isPlaying: boolean = false;
 	private startTime: number;
 
@@ -142,7 +143,7 @@ export class CreateSyncGameDisplayComponent implements OnInit {
   		// For such words we need to work backwards for positioning
   		let curX: number = this.width/2 - 20;
 			for (let i = this.pTexts.length / 2 - 1; i >= 0; i--){
-  			curX -= this.pTexts[i].width + 2;
+  			curX -= this.pTexts[i].width + this.wordSpacing;
 				this.pTexts[i].x = curX; 
 				this.pTexts[i].style.fill = 0x888888;
   		}
@@ -151,7 +152,7 @@ export class CreateSyncGameDisplayComponent implements OnInit {
 			curX = this.width/2 + 20;
 			for (let i = this.pTexts.length / 2; i < this.pTexts.length; i++){
   			this.pTexts[i].x = curX; 
-  			curX += this.pTexts[i].width + 2;
+  			curX += this.pTexts[i].width + this.wordSpacing;
         if (i == this.pTexts.length / 2){
           this.pTexts[i].style.fill = 0xffffff;  
         } else {
@@ -172,7 +173,7 @@ export class CreateSyncGameDisplayComponent implements OnInit {
   			for (let i = this.pTexts.length / 2 - 1; i >= 0; i--){
 	  			let word: string = this.transcript.getWordAt(this.index - (this.pTexts.length / 2 - i));
 	  			this.pTexts[i].text = word;
-	  			curX -= this.pTexts[i].width + 2;
+	  			curX -= this.pTexts[i].width + this.wordSpacing;
   				this.pTexts[i].x = curX; 
   				this.pTexts[i].style.fill = 0x888888;
 	  		}
@@ -186,7 +187,7 @@ export class CreateSyncGameDisplayComponent implements OnInit {
 	  			let word: string = this.transcript.getWordAt(this.index + (i - this.pTexts.length / 2));
 	  			this.pTexts[i].text = word;
 	  			this.pTexts[i].x = curX; 
-	  			curX += this.pTexts[i].width + 2;
+	  			curX += this.pTexts[i].width + this.wordSpacing;
 	  			if (i == this.pTexts.length / 2){
             this.pTexts[i].style.fill = 0xffffff;  
           } else {
