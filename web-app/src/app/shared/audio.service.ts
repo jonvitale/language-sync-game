@@ -63,7 +63,6 @@ export class AudioService {
 				return false;
 			}
 		} else {
-			console.log("hi");
 			this.isPlaying = true;
 			this.playRef = this.sound.play();
 			return true;

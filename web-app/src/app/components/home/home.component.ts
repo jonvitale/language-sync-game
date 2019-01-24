@@ -7,7 +7,6 @@ import { TranscriptsService } from '../../shared/transcripts.service';
 import { User } from '../../shared/user.model';
 import { Transcript } from '../../shared/transcript.model';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,6 +16,7 @@ export class HomeComponent implements OnInit {
 
 	private transcriptTitles: string[];
 	private currentUser: User;
+  private options2 = [{id: 1, name: 'hi'}, {id: 2, name: 'bye'}];
 
   constructor(private usersService: UsersService, 
   						private transcriptsService: TranscriptsService,
@@ -32,35 +32,10 @@ export class HomeComponent implements OnInit {
   	.catch(error => console.log("error", error));
   }
 
-  onSubmitNewUser(form: NgForm) {
-  	let userName = form.value.userName;
-  	this.usersService.createNewUser(userName)
-  	.then((user: User|boolean) => {
-  		if (user instanceof User){
-  			console.log("welcome new user", user);
-  		} else {
-  			console.log("user already exists");
-  		}
-  	})
-  	.catch(error => console.log("error", error));
-  }
-
-  onSubmitLogin(form: NgForm) {
-  	let userName = form.value.userName;
-  	this.usersService.getExistingUser(userName)
-  	.then((user: User|boolean) => {
-  		if (user instanceof User){
-  			this.currentUser = user;
-  			console.log("welcome", user);
-  		} else {
-  			console.log("user does not exist");
-  		}  		
-  	})
-  	.catch(error => console.log("error", error));
-  }
-
+  
   onSelectTitle(title: string) {
   	if (this.usersService.currentUser != null){
+      console.log("selected title", title);
       // first check to see if the user has a version of this transcript
       this.transcriptsService.getUserTranscript(title, this.usersService.currentUserId)
       .then((transcript: Transcript) => {

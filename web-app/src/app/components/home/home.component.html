@@ -1,14 +1,15 @@
-<h3>Create User</h3>
-<form (ngSubmit)="onSubmitNewUser(nf)" #nf="ngForm">
-  UserName: <input type="text" name="userName" id="userName" class="form-control" ngModel><br>
-  <input type="submit" value="Submit">
-</form>
-<h3>Login</h3>
-<form (ngSubmit)="onSubmitLogin(lf)" #lf="ngForm">
-  UserName: <input type="text" name="userName" id="userName" class="form-control" ngModel><br>
-  <input type="submit" value="Submit">
-</form>
-<br>
-<div>
-	<button *ngFor="let title of transcriptTitles" (click)="onSelectTitle(title)">{{title}}</button>
-</div>
+<section class="mat-typography">
+	<mat-card fxFlex="400px">
+		<mat-card-title> Select a song </mat-card-title>
+		<mat-card-content>
+			<mat-form-field appearance="standard">
+				<mat-label>Choose a track</mat-label>
+				<mat-select placeholder="'...'" [(ngModel)]="selectedTitle" color="primary">
+					<mat-option *ngFor="let title of transcriptTitles" [value]="title">{{ title | removeUnderscore }}</mat-option>
+				</mat-select>
+			</mat-form-field>
+			<br>
+			<button mat-raised-button color="accent" (click)="onSelectTitle(selectedTitle)">{{ 'Select' | uppercase }}</button>
+		</mat-card-content>
+	</mat-card>
+</section>

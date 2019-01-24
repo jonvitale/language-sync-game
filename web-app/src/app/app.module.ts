@@ -6,10 +6,12 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,7 +20,12 @@ import { CreateSyncGameDisplayComponent } from './components/create-sync-game/cr
 
 import { TranscriptsService } from './shared/transcripts.service';
 import { AudioService } from './shared/audio.service';
+import { SpeechService } from './shared/speech.service';
 import { UsersService } from './shared/users.service';
+import { CreaseSyncGameMenuComponent } from './components/create-sync-game/crease-sync-game-menu/crease-sync-game-menu.component';
+
+import { RemoveUnderscorePipe } from './shared/remove-underscore.pipe';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +33,9 @@ import { UsersService } from './shared/users.service';
     CreateSyncGameComponent,
     CreateSyncGameDisplayComponent,
     HomeComponent,
+    CreaseSyncGameMenuComponent,
+    RemoveUnderscorePipe,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,11 +46,14 @@ import { UsersService } from './shared/users.service';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [
   	TranscriptsService,
   	AudioService,
     UsersService,
+    SpeechService,
   ],
   bootstrap: [AppComponent]
 })

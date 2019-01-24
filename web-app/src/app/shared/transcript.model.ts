@@ -25,6 +25,17 @@ export class Transcript {
 		if (this._wordTimings) _json['wordTimings'] = this._wordTimings;
 		return _json;
 	}
+	get words(): string[] {
+		let _words = [];
+    if(this._wordTimings){
+      for (let i = 0; i < this.length; i++){
+        _words.push(this.getWordAt(i));
+      }
+      return _words;
+    } else {
+      return null;
+    }
+  }
 
 	constructor (transcriptDoc: {}, transcriptId?: string) {
 		if (transcriptId) this._transcriptId = transcriptId;

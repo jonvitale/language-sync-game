@@ -5,6 +5,7 @@ import { CreateSyncGameDisplayComponent } from './create-sync-game-display/creat
 import { TranscriptsService } from '../../shared/transcripts.service';
 import { UsersService } from '../../shared/users.service';
 import { AudioService } from '../../shared/audio.service';
+import { SpeechService } from '../../shared/speech.service';
 import { Transcript } from '../../shared/transcript.model';
 
 @Component({
@@ -21,6 +22,7 @@ export class CreateSyncGameComponent implements OnInit {
   constructor(private transcriptService: TranscriptsService, 
               private usersService: UsersService,
               private audioService: AudioService,
+              // private speechService: SpeechService,
               private router: Router) { }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class CreateSyncGameComponent implements OnInit {
     } else {
       this.isPlaying = true;
       this.audioService.playAudio(filename + '.mp3');
+      // this.speechService.startWords(this.transcriptService.currentTranscript.words);
       this.displayComponent.createNewSync();  
     }
 	  

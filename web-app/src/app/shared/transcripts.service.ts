@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreDocument, 
          AngularFirestoreCollection, Query, QueryFn,
-         QueryDocumentSnapshot } from '@angular/fire/firestore';
+         QuerySnapshot, QueryDocumentSnapshot } from '@angular/fire/firestore';
+
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { UsersService } from './users.service';
 
@@ -15,9 +18,17 @@ import { Transcript } from './transcript.model';
 export class TranscriptsService {
   private _currentTranscript: Transcript;
   private _currentTranscriptId: string;
+  private observables$: Observable<QuerySnapshot<any>>[];
 
   public get currentTranscriptId(): string { return this._currentTranscriptId }
   public get currentTranscript(): Transcript { return this._currentTranscript }
+  public get currentWords(): string[] {
+    if(this._currentTranscript){
+      return this._currentTranscript.words;
+    } else {
+      return null;
+    }
+  }
 
   constructor(private http: HttpClient, 
               private storage: AngularFireStorage,
@@ -69,14 +80,19 @@ export class TranscriptsService {
         console.log(r);
         return r;
       };
-      let ref = this.afs.collection('transcripts', query);
-      ref.get().subscribe(
+      let ref: Observable<QuerySnapshot<any>> = this.afs.collection('transcripts', query).get();
+      this.observables$.push(ref);
+      ref.pipe(
+        take(1)
+      )
+      .subscribe(
         (transcriptSnapshot) => {
           console.log(transcriptSnapshot);
           this._currentTranscriptId = transcriptSnapshot.docs[0].id;
           this._currentTranscript = new Transcript(transcriptSnapshot.docs[0].data(), transcriptSnapshot.docs[0].id);
-          resolve(this.currentTranscript);
-        }
+          resolve(this._currentTranscript);
+        },
+        error => reject(error)
       );
   	});
   }

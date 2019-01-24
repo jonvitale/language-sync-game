@@ -1,0 +1,13 @@
+<section class="mat-typography">
+	<h3>Create User</h3>
+	<form (ngSubmit)="onSubmitNewUser(nf)" #nf="ngForm">
+	  User Name: <input type="text" name="userName" id="userName" class="form-control" ngModel><br>
+	  <input type="submit" value="Submit">
+	</form>
+	
+	<h3>Login</h3>
+	<form (ngSubmit)="onSubmitLogin(lf)" #lf="ngForm">
+	  User Name: <input type="text" name="userName" id="userName" class="form-control" ngModel><br>
+	  <button mat-raised-button color="accent" type="submit">{{ 'Submit' | uppercase }}</button>
+	</form>
+</section>
