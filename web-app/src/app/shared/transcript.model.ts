@@ -22,7 +22,7 @@ export class Transcript {
 		if (this._transcriptId) _json['transcriptId'] = this._transcriptId;
 		if (this._title) _json['title'] = this._title;
 		if (this._fullText) _json['fullText'] = this._fullText;
-		if (this._wordTimings) _json['wordTimings'] = this._wordTimings;
+		if (this._wordTimings) _json['wordTimings'] = JSON.parse(JSON.stringify(this._wordTimings));
 		return _json;
 	}
 	get words(): string[] {
@@ -65,7 +65,7 @@ export class Transcript {
 		if (index >= 0 && index < this.wordTimings.length) {
 			return this.wordTimings[index].word;
 		} else {
-			return '';
+			return null;
 		}
 	}
 
@@ -77,9 +77,12 @@ export class Transcript {
 		}
 	}
 
-	setTimeAt(index: number, time: number): void {
+	setTimeAt(index: number, time: number): boolean {
 		if (index >= 0 && index < this.wordTimings.length) {
 			this.wordTimings[index].time = time;
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

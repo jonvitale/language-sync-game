@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
-import { UsersService } from '../../shared/users.service';
-import { TranscriptsService } from '../../shared/transcripts.service';
+import { UserService } from '../../shared/user.service';
+import { TranscriptService } from '../../shared/transcript.service';
 import { User } from '../../shared/user.model';
 
 
@@ -13,7 +14,7 @@ import { User } from '../../shared/user.model';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private usersService: UsersService, 
+  constructor(private userService: UserService, 
   						private router: Router) { }
 
   ngOnInit() {
@@ -21,7 +22,7 @@ export class WelcomeComponent implements OnInit {
 
   onSubmitNewUser(form: NgForm) {
   	let userName = form.value.userName;
-  	this.usersService.createNewUser(userName)
+  	this.userService.createNewUser(userName)
   	.then((user: User|boolean) => {
   		if (user instanceof User){
   			console.log("welcome new user", user);
@@ -34,10 +35,9 @@ export class WelcomeComponent implements OnInit {
 
   onSubmitLogin(form: NgForm) {
   	let userName = form.value.userName;
-  	this.usersService.getExistingUser(userName)
+  	this.userService.getExistingUser(userName)
   	.then((user: User|boolean) => {
   		if (user instanceof User){
-  			this.currentUser = user;
   			this.router.navigate(['/home'])
   		} else {
   			console.log("user does not exist");

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UsersService } from '../../shared/users.service';
-import { TranscriptsService } from '../../shared/transcripts.service';
+import { AudioService } from '../../shared/audio.service';
+import { UserService } from '../../shared/user.service';
+import { TranscriptService } from '../../shared/transcript.service';
 import { User } from '../../shared/user.model';
 import { Transcript } from '../../shared/transcript.model';
 
@@ -18,13 +19,14 @@ export class HomeComponent implements OnInit {
 	private currentUser: User;
   private options2 = [{id: 1, name: 'hi'}, {id: 2, name: 'bye'}];
 
-  constructor(private usersService: UsersService, 
-  						private transcriptsService: TranscriptsService,
+  constructor(private userService: UserService, 
+              private audioService: AudioService, 
+  						private transcriptService: TranscriptService,
   						private router: Router) { }
 
 
   ngOnInit() {
-  	this.transcriptsService.getTranscriptTitles()
+  	this.transcriptService.fetchTranscriptTitles()
   	.then((titles: string[]) => {
   		console.log(titles);
   		this.transcriptTitles = titles;
@@ -33,21 +35,44 @@ export class HomeComponent implements OnInit {
   }
 
   
-  onSelectTitle(title: string) {
-  	if (this.usersService.currentUser != null){
-      console.log("selected title", title);
+  onCreateTiming(title: string) {
+  	if (this.userService.currentUser != null){
       // first check to see if the user has a version of this transcript
-      this.transcriptsService.getUserTranscript(title, this.usersService.currentUserId)
+      this.transcriptService.fetchUserOrGeneralTranscript(title, this.userService.currentUserId)
       .then((transcript: Transcript) => {
         if (transcript instanceof Transcript) {
-          this.router.navigate(['/create-sync']);
+          this.loadAudioThenRoute(title, '/create-timing');
         } else {
           // if not, get it from the main store
-          this.transcriptsService.getTranscript(title)
-          .then(() => this.router.navigate(['/create-sync']))
+          this.transcriptService.fetchTranscript(title)
+          .then(() => this.loadAudioThenRoute(title, '/create-timing'))
         }
       })
       .catch(error => console.log("error", error));  		
   	}
   }
+
+  onPlayTiming(title: string) {
+    if (this.userService.currentUser != null){
+      // first check to see if the user has a version of this transcript
+      this.transcriptService.fetchUserOrGeneralTranscript(title, this.userService.currentUserId)
+      .then((transcript: Transcript) => {
+        if (transcript instanceof Transcript) {
+          this.loadAudioThenRoute(title, '/play-timing');
+        } else {
+          // if not, get it from the main store
+          this.transcriptService.fetchTranscript(title)
+          .then(() => this.loadAudioThenRoute(title, '/play-timing'))
+        }
+      })
+      .catch(error => console.log("error", error));      
+    }
+  }
+
+  loadAudioThenRoute(title, path){
+    this.audioService.loadAudio(title + '.mp3')
+    .then(() => this.router.navigate([path]))
+    .catch(() => console.log(title, "has no such audio"))
+  }
+
 }

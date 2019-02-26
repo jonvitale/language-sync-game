@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument,
          AngularFirestoreCollection, Query, QueryFn,
          QueryDocumentSnapshot } from '@angular/fire/firestore';
 
-import { TranscriptsService } from './transcripts.service';
+import { TranscriptService } from './transcript.service';
 import { Transcript } from './transcript.model';
 import { User } from './user.model';
 
@@ -12,7 +12,7 @@ import { User } from './user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
 
 	private _currentUser: User;
 	private _currentUserId: string;
@@ -20,7 +20,7 @@ export class UsersService {
 	public get currentUser(): User {return this._currentUser}
 	public get currentUserId(): string {return this._currentUserId}
 
-  constructor(private afs: AngularFirestore, private transcriptService: TranscriptsService) { 
+  constructor(private afs: AngularFirestore, private transcriptService: TranscriptService) { 
   }
 
   createNewUser(userName: string) : Promise<User|boolean> {
@@ -83,21 +83,15 @@ export class UsersService {
   }
 
 
-  setUserTranscript(transcript: Transcript, transcriptId?: string): Promise<boolean> {
+  uploadUserTranscript(): Promise<boolean> {
     return new Promise((resolve, reject) => {
-    	let id: string;
-    	if (transcriptId) {
-    		id = transcriptId; 
-    	} else if (this.transcriptService.currentTranscriptId){
-        id = this.transcriptService.currentTranscriptId
-      } else {
-        reject("No available transcript id");
-      }
+    	let id: string = this.transcriptService.id;
+    	let json: {} = this.transcriptService.json;
       this.afs.collection("users")
       .doc(this._currentUserId)
       .collection("transcripts")
       .doc(id)
-      .set(transcript.json, {merge: true})
+      .set(json, {merge: true})
       .then(() => resolve(true))
       .catch(error => reject(error));
     })

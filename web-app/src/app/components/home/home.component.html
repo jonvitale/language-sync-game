@@ -8,8 +8,13 @@
 					<mat-option *ngFor="let title of transcriptTitles" [value]="title">{{ title | removeUnderscore }}</mat-option>
 				</mat-select>
 			</mat-form-field>
-			<br>
-			<button mat-raised-button color="accent" (click)="onSelectTitle(selectedTitle)">{{ 'Select' | uppercase }}</button>
+		</mat-card-content>
+	</mat-card>
+	<mat-card fxFlex="400px" *ngIf="selectedTitle">
+		<mat-card-title> What would you like to do with this song? </mat-card-title>
+		<mat-card-content>
+			<button mat-button color="primary" (click)="onCreateTiming(selectedTitle)">Create a timing</button>
+			<button mat-button color="primary" (click)="onPlayTiming(selectedTitle)">Play it back</button>
 		</mat-card-content>
 	</mat-card>
 </section>

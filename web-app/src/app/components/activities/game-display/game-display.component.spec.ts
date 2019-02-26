@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreaseSyncGameMenuComponent } from './crease-sync-game-menu.component';
+import { GameDisplayComponent } from './game-display.component';
 
-describe('CreaseSyncGameMenuComponent', () => {
-  let component: CreaseSyncGameMenuComponent;
-  let fixture: ComponentFixture<CreaseSyncGameMenuComponent>;
+describe('GameDisplayComponent', () => {
+  let component: GameDisplayComponent;
+  let fixture: ComponentFixture<GameDisplayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreaseSyncGameMenuComponent ]
+      declarations: [ GameDisplayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreaseSyncGameMenuComponent);
+    fixture = TestBed.createComponent(GameDisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

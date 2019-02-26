@@ -15,27 +15,35 @@ import { MaterialModule } from './material.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { CreateSyncGameComponent } from './components/create-sync-game/create-sync-game.component';
-import { CreateSyncGameDisplayComponent } from './components/create-sync-game/create-sync-game-display/create-sync-game-display.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { PlayTimingComponent } from './components/activities/play-timing/play-timing.component';
+import { CreateTimingComponent } from './components/activities/create-timing/create-timing.component';
+// import { TranscriptDisplayComponent } from './components/activities/transcript-display/transcript-display.component';
+import { GameDisplayComponent } from './components/activities/game-display/game-display.component';
+import { GameControlsComponent } from './components/activities/game-controls/game-controls.component';
 
-import { TranscriptsService } from './shared/transcripts.service';
+// import { CreateSyncGameComponent } from './components/create-sync-game/create-sync-game.component';
+// import { CreateSyncGameDisplayComponent } from './components/create-sync-game/create-sync-game-display/create-sync-game-display.component';
+
+import { TranscriptService } from './shared/transcript.service';
 import { AudioService } from './shared/audio.service';
 import { SpeechService } from './shared/speech.service';
-import { UsersService } from './shared/users.service';
-import { CreaseSyncGameMenuComponent } from './components/create-sync-game/crease-sync-game-menu/crease-sync-game-menu.component';
+import { UserService } from './shared/user.service';
+// import { CreaseSyncGameMenuComponent } from './components/create-sync-game/crease-sync-game-menu/crease-sync-game-menu.component';
 
 import { RemoveUnderscorePipe } from './shared/remove-underscore.pipe';
-import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateSyncGameComponent,
-    CreateSyncGameDisplayComponent,
     HomeComponent,
-    CreaseSyncGameMenuComponent,
+    // CreaseSyncGameMenuComponent,
     RemoveUnderscorePipe,
     WelcomeComponent,
+    CreateTimingComponent,
+    PlayTimingComponent,
+    GameDisplayComponent,
+    GameControlsComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,9 +58,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     MaterialModule,
   ],
   providers: [
-  	TranscriptsService,
+  	TranscriptService,
   	AudioService,
-    UsersService,
+    UserService,
     SpeechService,
   ],
   bootstrap: [AppComponent]

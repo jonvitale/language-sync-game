@@ -1,0 +1,11 @@
+<div>
+	<button mat-button *ngIf="!waiting" (click)="onPlay($event);"> 
+		{{ playText | uppercase}}
+	</button>
+	<span mat-button *ngIf="waiting"> 
+		Waiting...
+	</span>
+	<button mat-button (click)="onStop($event);">
+		{{ stopText | uppercase}}
+	</button>
+</div>

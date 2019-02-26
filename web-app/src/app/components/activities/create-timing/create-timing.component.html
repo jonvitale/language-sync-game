@@ -1,0 +1,4 @@
+<div (keydown)="onKeyPress($event)">
+	<app-game-display [activityType] = "'createTiming'" ></app-game-display>
+	<app-game-controls (controlsEvent) = "onControlsEvent($event)"></app-game-controls>
+</div>
